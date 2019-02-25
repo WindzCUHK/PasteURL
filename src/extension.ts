@@ -109,8 +109,9 @@ class Paster {
                     return streamHandler(err);
                 }
 
-                const contentType = response.headers['content-type'];
-                const charset = contentType.substring(contentType.indexOf('charset=') + 'charset='.length);
+                const contentType = response.headers['content-type'] || '';
+                const charsetIndex = contentType.indexOf('charset=');
+                const charset = (charsetIndex < 0) ? '' : contentType.substring(charsetIndex + 'charset='.length);
                 const encoding = charset || 'utf8';
 
                 const stream = response
